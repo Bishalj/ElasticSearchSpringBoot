@@ -17,4 +17,9 @@ public class ElasticSearchDaoImpl implements IElasticSearchDao {
         employees.add(e);
         return employees;
     }
+
+    @Override
+    public Employee addEmployeeDetails() {
+        return null;
+    }
 }

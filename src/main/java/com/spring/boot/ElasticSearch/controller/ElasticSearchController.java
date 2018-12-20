@@ -24,7 +24,7 @@ public class ElasticSearchController {
 
     @PostMapping("/")
     public Employee addEmployeeDetails(){
-        return  elasticBeanFactory.getElasticSearchService().getAllEmployeesDetail();
+        return  elasticBeanFactory.getElasticSearchService().addEmployeeDetails();
     }
 
 }

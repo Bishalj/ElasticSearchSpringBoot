@@ -17,4 +17,9 @@ public class ElasticSearchServiceImpl implements IElasticSearchService {
     public List<Employee> getAllEmployeesDetail() {
         return elasticBeanFactory.getElasticSearchDao().getAllEmployeesDetail();
     }
+
+    @Override
+    public Employee addEmployeeDetails() {
+        return elasticBeanFactory.getElasticSearchDao().addEmployeeDetails();
+    }
 }
