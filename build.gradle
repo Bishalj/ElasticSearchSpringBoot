@@ -27,6 +27,11 @@ repositories {
 dependencies {
 	compile group: 'org.elasticsearch', name: 'elasticsearch', version: '6.2.4'
 	compile group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: '6.2.4'
+
+	compile group: 'org.elasticsearch.client', name: 'elasticsearch-rest-client', version: '6.2.4'
+	compile group: 'org.elasticsearch.client', name: 'elasticsearch-rest-client-sniffer', version: '6.2.4'
+
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.5'
 	implementation('org.springframework.boot:spring-boot-starter-web')
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 	compileOnly('org.projectlombok:lombok')

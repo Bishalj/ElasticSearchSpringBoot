@@ -8,5 +8,5 @@ import java.util.List;
 public interface IElasticSearchService {
     List<Employee> getAllEmployeesDetail();
 
-    Employee addEmployeeDetails();
+    Employee addEmployeeDetails(Employee e);
 }

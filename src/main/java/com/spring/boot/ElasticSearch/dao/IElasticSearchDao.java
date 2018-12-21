@@ -7,5 +7,5 @@ import java.util.List;
 public interface IElasticSearchDao {
     List<Employee> getAllEmployeesDetail();
 
-    Employee addEmployeeDetails();
+    Employee addEmployeeDetails(Employee e);
 }
