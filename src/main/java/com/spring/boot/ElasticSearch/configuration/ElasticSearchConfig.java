@@ -11,8 +11,8 @@ import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ElasticSearchConfiguration extends AbstractFactoryBean{
-    private static final Logger LOGGER = LoggerFactory.getLogger(ElasticSearchConfiguration.class);
+public class ElasticSearchConfig{
+    private static final Logger LOGGER = LoggerFactory.getLogger(ElasticSearchConfig.class);
 
     @Value("${spring.data.elasticsearch.cluster-nodes}")
     private String clusterNodes;
@@ -20,10 +20,9 @@ public class ElasticSearchConfiguration extends AbstractFactoryBean{
     @Value("${spring.data.elasticsearch.cluster-name}")
     private String clusterName;
 
-    private RestHighLevelClient restHighLevelClient;
+    private static RestHighLevelClient restHighLevelClient = null;
 
-    @Override
-    public void destroy() throws Exception {
+    public static void destroy() throws Exception {
         try {
             if (restHighLevelClient != null) {
                 restHighLevelClient.close();
@@ -34,22 +33,8 @@ public class ElasticSearchConfiguration extends AbstractFactoryBean{
         }
     }
 
-    @Override
-    public Class<RestHighLevelClient> getObjectType() {
-        return RestHighLevelClient.class;
-    }
 
-    @Override
-    public boolean isSingleton() {
-        return false;
-    }
-
-    @Override
-    protected RestHighLevelClient createInstance() {
-        return buildClient();
-    }
-
-    private RestHighLevelClient buildClient() {
+    private static RestHighLevelClient buildClient() {
         try {
             restHighLevelClient = new RestHighLevelClient(
                     RestClient.builder(
@@ -59,5 +44,11 @@ public class ElasticSearchConfiguration extends AbstractFactoryBean{
         }
         LOGGER.info("Elastic Search Connected");
         return restHighLevelClient;
+    }
+
+    public static RestHighLevelClient getReactiveClient(){
+        if(restHighLevelClient == null)
+            return buildClient();
+        return  restHighLevelClient;
     }
 }

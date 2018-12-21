@@ -19,7 +19,7 @@ public class ElasticSearchServiceImpl implements IElasticSearchService {
     }
 
     @Override
-    public Employee addEmployeeDetails() {
-        return elasticBeanFactory.getElasticSearchDao().addEmployeeDetails();
+    public Employee addEmployeeDetails(Employee e) {
+        return elasticBeanFactory.getElasticSearchDao().addEmployeeDetails(e);
     }
 }
