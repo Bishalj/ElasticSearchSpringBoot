@@ -10,4 +10,7 @@ public interface IElasticSearchDao {
     Employee addEmployeeDetails(Employee e);
 
     List<Employee> searchEmployeesByAddress(String address);
+    
+    Employee updateEmployeesById(String id, Employee employee);
+    
 }

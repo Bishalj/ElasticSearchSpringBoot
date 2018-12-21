@@ -1,5 +1,6 @@
 package com.spring.boot.ElasticSearch.dao.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.boot.ElasticSearch.configuration.ElasticSearchConfig;
@@ -10,8 +11,11 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -54,7 +58,7 @@ public class ElasticSearchDaoImpl implements IElasticSearchDao {
         IndexRequest indexRequest = new IndexRequest(ELASTIC_INDEX,ELASTIC_TYPE)
                                                         .source(dataMap);
         try {
-            IndexResponse response = ElasticSearchConfig.getReactiveClient().index(indexRequest);
+            IndexResponse response = elasticBeanFactory.getElasticSearchQueryDao().insert(indexRequest);
             System.out.print(response);
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -91,5 +95,28 @@ public class ElasticSearchDaoImpl implements IElasticSearchDao {
 		});
 		return employeess;
 	}
+
+	@Override
+	public Employee updateEmployeesById(String id, Employee employee) {
+		// TODO Auto-generated method stub
+		UpdateRequest updateRequest = new UpdateRequest(ELASTIC_INDEX,ELASTIC_TYPE,id)
+														.fetchSource(true);
+		Map<String, Object> error = new HashMap<>();
+        error.put("Error", "Unable to update article.");
+        try {
+            String employeeJson = objectMapper.writeValueAsString(employee);
+            updateRequest.doc(employeeJson, XContentType.JSON);
+            UpdateResponse updateResponse = elasticBeanFactory.getElasticSearchQueryDao().update(updateRequest);
+            Map<String, Object> sourceAsMap = updateResponse.getGetResult().sourceAsMap();
+            System.out.println(sourceAsMap);
+            return null;
+        }catch (JsonProcessingException e){
+            e.getMessage();
+        } catch (java.io.IOException e){
+            e.getLocalizedMessage();
+        }
+		return null;
+	}
+
 
 }

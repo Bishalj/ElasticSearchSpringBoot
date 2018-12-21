@@ -28,4 +28,10 @@ public class ElasticSearchServiceImpl implements IElasticSearchService {
     public Employee addEmployeeDetails(Employee e) {
         return elasticBeanFactory.getElasticSearchDao().addEmployeeDetails(e);
     }
+
+	@Override
+	public Employee updateEmloyeeDetailById(String id, Employee employee) {
+		// TODO Auto-generated method stub
+		return elasticBeanFactory.getElasticSearchDao().updateEmployeesById(id,employee);
+	}
 }

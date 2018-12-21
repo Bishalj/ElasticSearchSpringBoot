@@ -11,4 +11,6 @@ public interface IElasticSearchService {
     Employee addEmployeeDetails(Employee e);
 
     List<Employee> getEmloyeeByAddress(String address);
+    
+    Employee updateEmloyeeDetailById(String id, Employee employee);
 }
