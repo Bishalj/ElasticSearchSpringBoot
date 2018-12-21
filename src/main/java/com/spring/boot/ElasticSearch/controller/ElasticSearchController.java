@@ -24,4 +24,9 @@ public class ElasticSearchController {
         return  elasticBeanFactory.getElasticSearchService().addEmployeeDetails(e);
     }
 
+    @GetMapping("/getDetailsByAddress")
+    public List<Employee> getEmployeeDetailsByAddress(@RequestParam String address){
+        return  elasticBeanFactory.getElasticSearchService().getEmloyeeByAddress(address);
+    }
+
 }

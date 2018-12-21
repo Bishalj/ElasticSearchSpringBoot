@@ -2,6 +2,7 @@ package com.spring.boot.ElasticSearch.service.impl;
 
 import com.spring.boot.ElasticSearch.configuration.ElasticSearchConfig;
 import com.spring.boot.ElasticSearch.dao.IElasticSearchDao;
+import com.spring.boot.ElasticSearch.dao.IElasticSearchQueryDao;
 import com.spring.boot.ElasticSearch.service.IElasticBeanFactory;
 import com.spring.boot.ElasticSearch.service.IElasticSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,8 @@ public class ElasticBeanFactoryImpl implements IElasticBeanFactory {
     private  IElasticSearchService elasticSearchService;
 
     @Autowired
-    private ElasticSearchConfig elasticSearchConfig;
+    private IElasticSearchQueryDao elasticSearchQueryDao;
+
     @Override
     public IElasticSearchDao getElasticSearchDao() {
         return elasticSearchDao;
@@ -27,5 +29,11 @@ public class ElasticBeanFactoryImpl implements IElasticBeanFactory {
     public IElasticSearchService getElasticSearchService() {
         return elasticSearchService;
     }
+
+    @Override
+    public IElasticSearchQueryDao getElasticSearchQueryDao() {
+        return elasticSearchQueryDao;
+    }
+
 
 }

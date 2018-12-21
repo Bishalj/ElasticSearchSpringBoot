@@ -9,4 +9,6 @@ public interface IElasticSearchService {
     List<Employee> getAllEmployeesDetail();
 
     Employee addEmployeeDetails(Employee e);
+
+    List<Employee> getEmloyeeByAddress(String address);
 }

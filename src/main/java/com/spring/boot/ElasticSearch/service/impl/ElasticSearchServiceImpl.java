@@ -13,6 +13,12 @@ public class ElasticSearchServiceImpl implements IElasticSearchService {
 
     @Autowired
     private IElasticBeanFactory elasticBeanFactory;
+
+    @Override
+    public List<Employee> getEmloyeeByAddress(String address) {
+        return elasticBeanFactory.getElasticSearchDao().searchEmployeesByAddress(address);
+    }
+
     @Override
     public List<Employee> getAllEmployeesDetail() {
         return elasticBeanFactory.getElasticSearchDao().getAllEmployeesDetail();
