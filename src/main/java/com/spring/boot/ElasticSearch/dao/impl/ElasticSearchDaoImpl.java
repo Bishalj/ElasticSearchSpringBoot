@@ -120,12 +120,14 @@ public class ElasticSearchDaoImpl implements IElasticSearchDao {
         SearchRequest searchRequest = new SearchRequest(ELASTIC_INDEX);
         searchRequest.types(ELASTIC_TYPE);
         String[] includeFields = new String[]{"name"};
-        String[] excludeFields = new String[]{"id", "joiningDate", "address", "monthlySalary", "hobbies"};
+        String[] excludeFields = new String[]{"id", "joiningDate", "address", "monthlySalary"};
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders
                 .matchAllQuery())
                 .size(10000);
         searchSourceBuilder.fetchSource(includeFields, excludeFields);
+        //searchSourceBuilder.fetchSource(includeFields, null); you can use like this
+
         searchRequest.source(searchSourceBuilder);
 
         List<String>employeeName = new ArrayList<>();
