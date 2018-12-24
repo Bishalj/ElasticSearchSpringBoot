@@ -21,6 +21,7 @@ import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,7 +96,7 @@ public class ElasticSearchDaoImpl implements IElasticSearchDao {
             SearchRequest searchRequest = new SearchRequest(ELASTIC_INDEX)
             		.types(ELASTIC_TYPE)
                     .source(searchSourceBuilder);
-            searchResponse = elasticBeanFactory.getElasticSearchQueryDao().findBySearchQuery(searchRequest);
+            searchResponse = elasticBeanFactory.getElasticSearchQueryDao().search(searchRequest);
         }catch (Exception e){
             e.printStackTrace();
             logger.info(e.getMessage());
@@ -114,7 +115,38 @@ public class ElasticSearchDaoImpl implements IElasticSearchDao {
 		return employees;
 	}
 
-	@Override
+    @Override
+    public List<String> getAllEmployeesNames() {
+        SearchRequest searchRequest = new SearchRequest(ELASTIC_INDEX);
+        searchRequest.types(ELASTIC_TYPE);
+        String[] includeFields = new String[]{"name"};
+        String[] excludeFields = new String[]{"id", "joiningDate", "address", "monthlySalary", "hobbies"};
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders
+                .matchAllQuery())
+                .size(10000);
+        searchSourceBuilder.fetchSource(includeFields, excludeFields);
+        searchRequest.source(searchSourceBuilder);
+
+        List<String>employeeName = new ArrayList<>();
+
+        SearchHits hits = new SearchHits(new SearchHit[0], 0, 0);
+
+        try {
+            SearchResponse searchResponse = elasticBeanFactory.getElasticSearchQueryDao().search(searchRequest);
+            hits = searchResponse.getHits();
+            System.out.println(hits.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(SearchHit documentFields: hits.getHits()){
+            if(!employeeName.contains(documentFields.getSourceAsMap().get("name")))
+                employeeName.add(documentFields.getSourceAsMap().get("name").toString());
+        }
+        return employeeName;
+    }
+
+    @Override
 	public Employee updateEmployeesById(String id, Employee employee) {
 		// TODO Auto-generated method stub
 		UpdateRequest updateRequest = new UpdateRequest(ELASTIC_INDEX,ELASTIC_TYPE,id)

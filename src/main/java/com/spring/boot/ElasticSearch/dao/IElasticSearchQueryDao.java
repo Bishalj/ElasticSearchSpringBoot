@@ -19,7 +19,7 @@ import java.util.List;
 
 public interface IElasticSearchQueryDao {
 
-    SearchResponse findBySearchQuery(SearchRequest searchRequest) throws IOException;
+    SearchResponse search(SearchRequest searchRequest) throws IOException;
     
     IndexResponse insert(IndexRequest indexRequest)throws IOException;
     

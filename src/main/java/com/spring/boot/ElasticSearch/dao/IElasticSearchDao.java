@@ -14,5 +14,7 @@ public interface IElasticSearchDao {
     Employee updateEmployeesById(String id, Employee employee);
 
     Employee getEmployeesById(String id);
+
+    List<String> getAllEmployeesNames();
     
 }

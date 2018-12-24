@@ -30,7 +30,7 @@ public class ElasticSearchQueryDaoImpl implements IElasticSearchQueryDao {
 
 
     @Override
-    public SearchResponse findBySearchQuery(SearchRequest searchRequest)throws IOException {
+    public SearchResponse search(SearchRequest searchRequest)throws IOException {
         return ElasticSearchConfig.getReactiveClient().search(searchRequest);
     }
 

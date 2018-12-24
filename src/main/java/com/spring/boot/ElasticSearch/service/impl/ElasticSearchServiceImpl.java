@@ -30,6 +30,11 @@ public class ElasticSearchServiceImpl implements IElasticSearchService {
     }
 
     @Override
+    public List<String> getAllEmployeesNames() {
+        return elasticBeanFactory.getElasticSearchDao().getAllEmployeesNames();
+    }
+
+    @Override
     public Employee getEmployeesById(String id) {
         return elasticBeanFactory.getElasticSearchDao().getEmployeesById(id);
     }

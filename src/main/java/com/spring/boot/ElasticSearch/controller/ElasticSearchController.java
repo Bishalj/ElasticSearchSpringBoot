@@ -39,4 +39,9 @@ public class ElasticSearchController {
         return  elasticBeanFactory.getElasticSearchService().getEmployeesById(id);
     }
 
+    @GetMapping("/getAllEmployeeNames")
+    public List<String> getAllEmployeeNames(){
+        return  elasticBeanFactory.getElasticSearchService().getAllEmployeesNames();
+    }
+
 }
