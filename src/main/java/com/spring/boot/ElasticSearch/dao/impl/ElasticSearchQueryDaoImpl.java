@@ -58,6 +58,6 @@ public class ElasticSearchQueryDaoImpl implements IElasticSearchQueryDao {
 	@Override
 	public GetResponse getById(GetRequest getRequest) throws IOException {
 		// TODO Auto-generated method stub
-		return null;
+		return ElasticSearchConfig.getReactiveClient().get(getRequest);
 	}
 }

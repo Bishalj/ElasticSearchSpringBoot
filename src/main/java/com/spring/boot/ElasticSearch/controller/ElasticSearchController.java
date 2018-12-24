@@ -34,4 +34,9 @@ public class ElasticSearchController {
         return  elasticBeanFactory.getElasticSearchService().updateEmloyeeDetailById(id, employee);
     }
 
+    @GetMapping("/getEmployeeDetailById")
+    public Employee getEmployeeDetailsById(@RequestParam String id){
+        return  elasticBeanFactory.getElasticSearchService().getEmployeesById(id);
+    }
+
 }

@@ -7,6 +7,8 @@ import com.spring.boot.ElasticSearch.configuration.ElasticSearchConfig;
 import com.spring.boot.ElasticSearch.dao.IElasticSearchDao;
 import com.spring.boot.ElasticSearch.models.Employee;
 import com.spring.boot.ElasticSearch.service.IElasticBeanFactory;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
@@ -44,6 +46,20 @@ public class ElasticSearchDaoImpl implements IElasticSearchDao {
     private IElasticBeanFactory elasticBeanFactory;
 
     @Override
+    public Employee getEmployeesById(String id) {
+        GetRequest getRequest = new GetRequest(ELASTIC_INDEX, ELASTIC_TYPE, id);
+        Map<String, Object> sourceAsMap = new HashMap<>();
+        try {
+            GetResponse getResponse = elasticBeanFactory.getElasticSearchQueryDao().getById(getRequest);
+            sourceAsMap = getResponse.getSourceAsMap();
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        System.out.println(sourceAsMap);
+        return objectMapper.convertValue(sourceAsMap, Employee.class);
+    }
+
+    @Override
     public List<Employee> getAllEmployeesDetail() {
         Employee e  = new Employee();
         e.setAddress("1234r");
@@ -51,6 +67,8 @@ public class ElasticSearchDaoImpl implements IElasticSearchDao {
         employees.add(e);
         return employees;
     }
+
+
 
     @Override
     public Employee addEmployeeDetails(Employee e) {
