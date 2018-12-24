@@ -13,6 +13,12 @@ public class ElasticSearchServiceImpl implements IElasticSearchService {
 
     @Autowired
     private IElasticBeanFactory elasticBeanFactory;
+
+    @Override
+    public List<Employee> getEmloyeeByAddress(String address) {
+        return elasticBeanFactory.getElasticSearchDao().searchEmployeesByAddress(address);
+    }
+
     @Override
     public List<Employee> getAllEmployeesDetail() {
         return elasticBeanFactory.getElasticSearchDao().getAllEmployeesDetail();
@@ -22,4 +28,10 @@ public class ElasticSearchServiceImpl implements IElasticSearchService {
     public Employee addEmployeeDetails(Employee e) {
         return elasticBeanFactory.getElasticSearchDao().addEmployeeDetails(e);
     }
+
+	@Override
+	public Employee updateEmloyeeDetailById(String id, Employee employee) {
+		// TODO Auto-generated method stub
+		return elasticBeanFactory.getElasticSearchDao().updateEmployeesById(id,employee);
+	}
 }
