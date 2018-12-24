@@ -87,13 +87,13 @@ public class ElasticSearchDaoImpl implements IElasticSearchDao {
     }
 
 	private List<Employee> mapSearchResponseToEmployee(List<SearchHit> searchHists) {
-    	List<Employee> employeess =  new ArrayList<Employee>();
+    	List<Employee> employees =  new ArrayList<Employee>();
 		searchHists.forEach( searchHit -> {
 			JsonNode jsonObjectMapper = objectMapper.convertValue(searchHit, JsonNode.class);
 			Employee employee =  objectMapper.convertValue(jsonObjectMapper.get("sourceAsMap"), Employee.class);
-			employeess.add(employee);
+			employees.add(employee);
 		});
-		return employeess;
+		return employees;
 	}
 
 	@Override
@@ -109,11 +109,9 @@ public class ElasticSearchDaoImpl implements IElasticSearchDao {
             UpdateResponse updateResponse = elasticBeanFactory.getElasticSearchQueryDao().update(updateRequest);
             Map<String, Object> sourceAsMap = updateResponse.getGetResult().sourceAsMap();
             System.out.println(sourceAsMap);
-            return null;
-        }catch (JsonProcessingException e){
-            e.getMessage();
-        } catch (java.io.IOException e){
-            e.getLocalizedMessage();
+            return objectMapper.convertValue(sourceAsMap, Employee.class);
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 		return null;
 	}

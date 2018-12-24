@@ -1,14 +1,20 @@
 package com.spring.boot.ElasticSearch.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Date;
 import java.util.List;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 
 public class Employee {
     private String id;
     private String name;
     private String address;
     private Date joiningDate;
-    private int monthlySalary;
+    private Integer monthlySalary;
     private List<String> hobbies;
 
     public String getId() {
